@@ -429,7 +429,6 @@ apply_mfa(M, Type, A, MfCfg, FileLine) ->
 	end.
 apply_(M, F, A) ->
 	try
-		 io:format("[~p] [~p] | M, F:~p~n", [?MODULE, ?LINE, {M, F}]),
 		case apply(M, F, A) of
 			{ok, _} = R ->
 				R;
