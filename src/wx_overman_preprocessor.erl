@@ -21,7 +21,6 @@
 %%%=======================DEFINE=======================
 
 -define(SERVER, ?MODULE).
--define(Dir, 'project_dir').  %%项目根目录
 -define(FileDepth, 10).  %%文件遍历深度
 -define(Extension_Cfg, ".cfg").  %%后缀-配置文件
 -define(Extension_Beam, ".beam").  %%后缀-Beam文件
@@ -44,7 +43,7 @@
 %% Inputs:
 %% Returns: 
 %% -----------------------------------------------------------------
-start()->
+start() ->
 	search_project().
 %==========================DEFINE=======================
 %% -----------------------------------------------------------------
@@ -53,7 +52,7 @@ start()->
 %% Returns:
 %% -----------------------------------------------------------------
 search_project() ->
-	{ok, [[Dir | _]]} = init:get_argument(?Dir),
+	Dir = get_lib_dir(),
 	{ok, List} = file:list_dir(Dir),
 	{Boot, Mf, Cfg, Init, Other} =
 		parse_project(lists:reverse(List), Dir, [], [], [], [], []),
@@ -438,4 +437,12 @@ apply_(M, F, A) ->
 	catch
 		E1:E2:E3 ->
 			exit({err, {{type, E1}, {pattern, E2}, {stack, E3}}})
+	end.
+
+get_lib_dir() ->
+	case os:type() of
+		{unix, _} ->
+			"./lib";
+		{win32, _} ->
+			"../lib"
 	end.
