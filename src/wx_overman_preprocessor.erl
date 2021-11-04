@@ -52,7 +52,7 @@ start() ->
 %% Returns:
 %% -----------------------------------------------------------------
 search_project() ->
-	Dir = get_lib_dir(),
+	Dir = filename:absname(get_lib_dir()),
 	{ok, List} = file:list_dir(Dir),
 	{Boot, Mf, Cfg, Init, Other} =
 		parse_project(lists:reverse(List), Dir, [], [], [], [], []),

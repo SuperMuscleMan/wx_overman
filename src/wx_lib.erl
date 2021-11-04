@@ -45,7 +45,7 @@ rand(N1, N2) when N2 > N1 ->
 getCurProject([Path, Reg, Match]) ->
 	getCurProject(Path, Reg, Match).
 getCurProject(Path, Reg, Match) ->
-	ProjectDir = lists:nth(3, filename:split(Path)),
+	ProjectDir = filename:basename(Path),
 	case re:run(ProjectDir, Reg, Match) of
 		{match, [R]} -> R;
 		_ ->
